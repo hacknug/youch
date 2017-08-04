@@ -71,8 +71,7 @@ class Youch {
       return {
         pre: lines.slice(Math.max(0, lineNumber - (this.codeContext + 1)), lineNumber - 1),
         line: lines[lineNumber - 1],
-        post: lines.slice(lineNumber, lineNumber + this.codeContext),
-        lang : this._getLang(frame)
+        post: lines.slice(lineNumber, lineNumber + this.codeContext)
       }
     })
   }
@@ -125,7 +124,6 @@ class Youch {
       pre: frame.context.pre.join('\n'),
       line: frame.context.line,
       post: frame.context.post.join('\n'),
-      lang: frame.context.lang
     }
   }
 
@@ -159,7 +157,7 @@ class Youch {
    *
    * @return {String}
    */
-  _complieView (view, data) {
+  _compileView (view, data) {
     return Mustache.render(view, data)
   }
 
@@ -180,7 +178,8 @@ class Youch {
       method: frame.getFunctionName(),
       line: frame.getLineNumber(),
       column: frame.getColumnNumber(),
-      context: this._getContext(frame)
+      context: this._getContext(frame),
+      lang: this._getLang(frame)
     }
   }
 
@@ -194,9 +193,10 @@ class Youch {
     if (frame.isNative()) {
       return true
     }
+
+    // const filename = frame.getFileName() || ''
+    // return !path.isAbsolute(filename) && filename[0] !== '.'
     return false
-    const filename = frame.getFileName() || ''
-    return !path.isAbsolute(filename) && filename[0] !== '.'
   }
 
   /**
@@ -325,8 +325,7 @@ class Youch {
         const request = this._serializeRequest()
         data.request = request
         data.hasInternal = hasInternal
-        console.log(hasInternal)
-        resolve(this._complieView(viewTemplate, data))
+        resolve(this._compileView(viewTemplate, data))
       })
       .catch(reject)
     })
