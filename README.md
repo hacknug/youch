@@ -37,10 +37,10 @@ npm i --save youch
 ```
 
 ## Basic Usage
-Youch is used by [AdonisJs](http://adonisjs.com), but it can be used by express or raw HTTP server as well.
+Youch is used by [AdonisJs](http://adonisjs.com) and [Nuxt.js](https://nuxtjs.org), but it can be used by express or raw HTTP server as well.
 
 ```javascript
-const Youch = require('youch')
+const Youch = require('@nuxtjs/youch')
 const http = require('http')
 
 http.createServer(function (req, res) {

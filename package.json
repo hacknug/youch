@@ -1,5 +1,8 @@
 {
-  "name": "youch",
+  "name": "@nuxtjs/youch",
+  "publishConfig": {
+    "access": "public"
+  },
   "version": "2.0.5",
   "description": "HTML Pretty error stack viewer",
   "main": "src/Youch/index.js",
@@ -32,7 +35,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/poppinss/youch.git"
+    "url": "git+https://github.com/nuxt/youch.git"
   },
   "keywords": [
     "errors",
@@ -40,7 +43,7 @@
     "whoops"
   ],
   "bugs": {
-    "url": "https://github.com/poppinss/youch/issues"
+    "url": "https://github.com/poppinss/nuxt/issues"
   },
-  "homepage": "https://github.com/poppinss/youch#readme"
+  "homepage": "https://github.com/poppinss/nuxt#readme"
 }
