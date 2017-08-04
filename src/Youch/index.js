@@ -34,19 +34,18 @@ class Youch {
   }
 
   /**
-   * Returns the source code for a given file. It unable to
-   * read file it resolves the promise with a null.
+   * Reads the source code for a given frame into frame.contents
    *
    * @param  {String} path
    * @return {Promise}
    */
-  _readSource (path) {
+  _readSource (frame) {
     return new Promise((resolve, reject) => {
-      fs.readFile(path, 'utf-8', (error, contents) => {
-        if (error) {
-          return resolve(null)
+      fs.readFile(fileName, 'utf-8', (error, contents) => {
+        if (!error && contents) {
+          frame.contents = contents  
         }
-        return resolve(contents)
+        resolve(frame)
       })
     })
   }
@@ -58,8 +57,8 @@ class Youch {
    * @return {Promise}
    */
   _getFrameSource (frame) {
-    return this.readSource(frame.getFileName()).then((contents) => {
-      if (!contents) {
+    return this.readSource(frame).then(()=> {
+      if (!frame.contents) {
         return
       }
 
@@ -180,6 +179,7 @@ class Youch {
     if (frame.isNative()) {
       return true
     }
+    return false
     const filename = frame.getFileName() || ''
     return !path.isAbsolute(filename) && filename[0] !== '.'
   }
