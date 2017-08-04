@@ -25,6 +25,11 @@ class Youch {
     this._filterHeaders = ['cookie', 'connection']
     this.error = error
     this.request = request
+    this._filterFrames = [
+      /regenerator-runtime/,
+      /babel-runtime/,
+      /core-js\/library/
+    ]
   }
 
   /**
@@ -62,7 +67,7 @@ class Youch {
   _parseError () {
     return new Promise((resolve, reject) => {
       const stack = stackTrace.parse(this.error)
-      Promise.all(stack.map((frame) => {
+      Promise.all(stack.filter(this.isVisible.bind(this)).map((frame) => {
         if (this._isNode(frame)) {
           return Promise.resolve(frame)
         }
@@ -159,7 +164,6 @@ class Youch {
     if (frame.isNative()) {
       return true
     }
-
     const filename = frame.getFileName() || ''
     return !path.isAbsolute(filename) && filename[0] !== '.'
   }
@@ -175,6 +179,16 @@ class Youch {
       return false
     }
     return !~(frame.getFileName() || '').indexOf('node_modules' + path.sep)
+  }
+
+  /**
+   * Returns whether frame should be visible
+   * or not.
+   *
+   * @return {Boolean} [description]
+   */
+  isVisible (frame) {
+    return this._filterFrames.every(f => !f.test(frame.getFileName()))
   }
 
   /**
