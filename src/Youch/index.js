@@ -85,6 +85,7 @@ class Youch {
    */
   _parseError () {
     const stack = stackTrace.parse(this.error)
+
     return Promise.all(stack.map((frame) => {
       if (this._isNode(frame)) {
         return Promise.resolve(frame)
@@ -94,7 +95,17 @@ class Youch {
         return frame
       })
     }))
-    .then(frames => frames.filter(this._isVisible.bind(this)))
+    .then(stack => stack.filter(this._isVisible.bind(this)))
+    .then(stack => {
+      let hasInternal = false
+      for (let frame of stack) {
+        if (!this._isApp(frame) && !this._isNode(frame)) {
+          hasInternal = true
+          break
+        }
+      }
+      return {stack, hasInternal}
+    })
   }
 
   /**
@@ -283,9 +294,10 @@ class Youch {
     return new Promise((resolve, reject) => {
       this
       ._parseError()
-      .then((stack) => {
+      .then(({ stack, hasInternal }) => {
         resolve({
-          error: this._serializeData(stack)
+          error: this._serializeData(stack),
+          hasInternal
         })
       })
       .catch(reject)
@@ -303,7 +315,7 @@ class Youch {
     return new Promise((resolve, reject) => {
       this
       ._parseError()
-      .then((stack) => {
+      .then(({ stack, hasInternal }) => {
         const data = this._serializeData(stack, (frame, index) => {
           const serializedFrame = this._serializeFrame(frame)
           serializedFrame.classes = this._getDisplayClasses(frame, index)
@@ -312,6 +324,8 @@ class Youch {
 
         const request = this._serializeRequest()
         data.request = request
+        data.hasInternal = hasInternal
+        console.log(hasInternal)
         resolve(this._complieView(viewTemplate, data))
       })
       .catch(reject)

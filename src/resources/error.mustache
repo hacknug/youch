@@ -655,10 +655,12 @@
         </div>
 
         <div class="frame-stack">
+        {{#hasInternal}}
           <div class="frames-filter-selector unselectable">
             <input type="checkbox" class="magic-checkbox" name="frames-filter" id="frames-filter">
             <label for="frames-filter">Show all frames</label>
           </div>
+        {{/hasInternal}}
 
           <div class="frames-list">
             {{#frames}}
@@ -676,7 +678,7 @@
                   data-file="{{file}}"
                   data-method="{{method}}"
                   data-line-column="{{line}}:{{column}}"
-                  data-lang="{{context.lang}}"
+                  data-lang="{{context.lang || 'js' }}"
                   >{{ context.pre }}
 {{ context.line }}
 {{ context.post }}

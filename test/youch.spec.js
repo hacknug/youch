@@ -19,7 +19,7 @@ test.group('Youch', () => {
     const youch = new Youch(error, {})
     youch
       ._parseError()
-      .then((stack) => {
+      .then(({stack, hasInternal}) => {
         assert.equal(stack[0].fileName, __filename)
         assert.equal(stack[0].native, false)
         done()
@@ -32,7 +32,7 @@ test.group('Youch', () => {
 
     youch
       ._parseError()
-      .then((stack) => {
+      .then(({stack, hasInternal}) => {
         const context = youch._getContext(stack[0])
         assert.equal(context.line.trim(), 'const error = new Error(\'this is bar\')')
         done()
