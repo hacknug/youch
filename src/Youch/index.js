@@ -80,18 +80,17 @@ class Youch {
    * @return {Object}
    */
   _parseError () {
-    return new Promise((resolve, reject) => {
-      const stack = stackTrace.parse(this.error)
-      Promise.all(stack.filter(this.isVisible.bind(this)).map((frame) => {
-        if (this._isNode(frame)) {
-          return Promise.resolve(frame)
-        }
-        return this._getFrameSource(frame).then((context) => {
-          frame.context = context
-          return frame
-        })
-      })).then(resolve).catch(reject)
-    })
+    const stack = stackTrace.parse(this.error)
+    return Promise.all(stack.map((frame) => {
+      if (this._isNode(frame)) {
+        return Promise.resolve(frame)
+      }
+      return this._getFrameSource(frame).then((context) => {
+        frame.context = context
+        return frame
+      })
+    }))
+    .then(frames => frames.filter(this.isVisible.bind(this)))
   }
 
   /**
