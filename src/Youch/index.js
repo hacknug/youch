@@ -41,7 +41,10 @@ class Youch {
    */
   _readSource (frame) {
     return new Promise((resolve, reject) => {
-      fs.readFile(fileName, 'utf-8', (error, contents) => {
+      if(!frame.fileName) {
+        return resolve(frame)
+      }
+      fs.readFile(frame.fileName, 'utf-8', (error, contents) => {
         if (!error && contents) {
           frame.contents = contents  
         }
@@ -62,7 +65,7 @@ class Youch {
         return
       }
 
-      const lines = contents.split(/\r?\n/)
+      const lines = frame.contents.split(/\r?\n/)
       const lineNumber = frame.getLineNumber()
 
       return {
