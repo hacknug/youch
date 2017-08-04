@@ -71,7 +71,8 @@ class Youch {
       return {
         pre: lines.slice(Math.max(0, lineNumber - (this.codeContext + 1)), lineNumber - 1),
         line: lines[lineNumber - 1],
-        post: lines.slice(lineNumber, lineNumber + this.codeContext)
+        post: lines.slice(lineNumber, lineNumber + this.codeContext),
+        lang : this._getLang(frame)
       }
     })
   }
@@ -93,7 +94,7 @@ class Youch {
         return frame
       })
     }))
-    .then(frames => frames.filter(this.isVisible.bind(this)))
+    .then(frames => frames.filter(this._isVisible.bind(this)))
   }
 
   /**
@@ -112,7 +113,8 @@ class Youch {
       start: frame.getLineNumber() - (frame.context.pre || []).length,
       pre: frame.context.pre.join('\n'),
       line: frame.context.line,
-      post: frame.context.post.join('\n')
+      post: frame.context.post.join('\n'),
+      lang: frame.context.lang
     }
   }
 
@@ -205,8 +207,17 @@ class Youch {
    *
    * @return {Boolean} [description]
    */
-  isVisible (frame) {
+  _isVisible (frame) {
     return this._filterFrames.every(f => !f.test(frame.getFileName()))
+  }
+
+  _getLang(frame) {
+    let name = frame.getFileName() || ''
+    let lang = 'js'
+    if(name.indexOf('.vue') !== -1) {
+      lang = 'html'
+    }
+    return lang
   }
 
   /**

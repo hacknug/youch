@@ -640,7 +640,7 @@
       <div class="error-frames">
         <div class="frame-preview is-hidden">
           <div id="frame-file"></div>
-          <div id="frame-code"><pre class="line-numbers"><code class="language-js" id="code-drop"></code></pre></div>
+          <div id="frame-code"><pre class="line-numbers"><code id="code-drop"></code></pre></div>
           <div id="frame-method"></div>
         </div>
 
@@ -666,6 +666,7 @@
                   data-file="{{file}}"
                   data-method="{{method}}"
                   data-line-column="{{line}}:{{column}}"
+                  data-lang="{{context.lang}}"
                   >{{ context.pre }}
 {{ context.line }}
 {{ context.post }}
@@ -767,10 +768,15 @@ Prism.languages.javascript=Prism.languages.extend("clike",{keyword:/\b(as|async|
           var $file = $frameContext.attr('data-file')
           var $method = $frameContext.attr('data-method')
           var $lineColumn = $frameContext.attr('data-line-column')
+          var $lang = $frameContext.attr('data-lang')
 
           $('#code-drop').parent('pre').attr('data-line', $line);
           $('#code-drop').parent('pre').attr('data-start', $start);
           $('#code-drop').parent('pre').attr('data-line-offset', (Number($start) - 1))
+
+          $('#code-drop').attr('class', 'language-' + $lang)
+          $('.toolbar-item > span').html($lang.toUpperCase())
+
           $('#code-drop').html($context)
           $('#frame-file').html($file)
           $('#frame-method').html($method + '@' + $lineColumn)
