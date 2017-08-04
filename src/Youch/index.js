@@ -37,8 +37,8 @@ class Youch {
   _getFrameSource (frame) {
     return new Promise((resolve, reject) => {
       fs.readFile(frame.getFileName(), 'utf-8', (error, contents) => {
-        if (error) {
-          resolve(null)
+        if (error || !contents) {
+          return resolve(null)
         }
 
         const lines = contents.split(/\r?\n/)
