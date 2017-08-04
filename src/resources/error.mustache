@@ -495,6 +495,16 @@
       margin-left: 8px;
     }
 
+    .unselectable {
+      -webkit-user-select: none; /* Chrome/Safari */        
+      -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* IE10+ */
+
+      /* Rules below not implemented in browsers yet */
+      -o-user-select: none;
+      user-select: none;
+    }
+
     .request-details {
       padding: 50px 80px;
     }
@@ -630,7 +640,7 @@
 
     <section class="error-stack">
 
-      <h3 class="error-status">{{ status }}</h3>
+      <h3 class="error-status unselectable">{{ status }}</h3>
 
       <div class="error-title">
         <h4 class="error-name"> {{ name }} </h4>
@@ -645,7 +655,7 @@
         </div>
 
         <div class="frame-stack">
-          <div class="frames-filter-selector">
+          <div class="frames-filter-selector unselectable">
             <input type="checkbox" class="magic-checkbox" name="frames-filter" id="frames-filter">
             <label for="frames-filter">Show all frames</label>
           </div>
