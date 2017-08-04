@@ -773,7 +773,7 @@ Prism.languages.javascript=Prism.languages.extend("clike",{keyword:/\b(as|async|
           $('#code-drop').parent('pre').attr('data-line-offset', (Number($start) - 1))
           $('#code-drop').html($context)
           $('#frame-file').html($file)
-          $('#frame-method').html($method + '' + $lineColumn)
+          $('#frame-method').html($method + '@' + $lineColumn)
           Prism.highlightAll()
         }
 
