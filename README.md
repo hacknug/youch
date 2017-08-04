@@ -1,5 +1,5 @@
 # Youch!
-> Pretty error reporting for Node.js :rocket:
+> Pretty error reporting for Node.js 🚀 (Modified for Nuxt.js & SSR Bundles)
 
 <br />
 
@@ -69,14 +69,14 @@ Checkout [LICENSE.txt](LICENSE.txt) for license information
 Harminder Virk (Aman) - [https://github.com/thetutlage](https://github.com/thetutlage)
 
 
-[appveyor-image]: https://ci.appveyor.com/api/projects/status/github/poppinss/youch?branch=master&svg=true&passingText=Passing%20On%20Windows
-[appveyor-url]: https://ci.appveyor.com/project/thetutlage/youch
+[appveyor-image]: https://ci.appveyor.com/api/projects/status/github/nuxt/youch?branch=master&svg=true&passingText=Passing%20On%20Windows
+[appveyor-url]: https://ci.appveyor.com/project/nuxt/youch
 
-[npm-image]: https://img.shields.io/npm/v/youch.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/youch
+[npm-image]: https://img.shields.io/npm/v/@nuxtjs/youch.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/@nuxtjs/youch
 
-[travis-image]: https://img.shields.io/travis/poppinss/youch/master.svg?style=flat-square
-[travis-url]: https://travis-ci.org/poppinss/youch
+[travis-image]: https://img.shields.io/travis/nuxt/youch/master.svg?style=flat-square
+[travis-url]: https://travis-ci.org/nuxt/youch
 
 [gitter-url]: https://gitter.im/adonisjs/adonis-framework
 [gitter-image]: https://img.shields.io/badge/gitter-join%20us-1DCE73.svg?style=flat-square
@@ -87,5 +87,5 @@ Harminder Virk (Aman) - [https://github.com/thetutlage](https://github.com/thetu
 [patreon-url]: https://www.patreon.com/adonisframework
 [patreon-image]: https://img.shields.io/badge/patreon-support%20AdonisJs-brightgreen.svg?style=flat-square
 
-[npm-downloads]: https://img.shields.io/npm/dm/youch.svg?style=flat-square
+[npm-downloads]: https://img.shields.io/npm/dm/@nuxtjs/youch.svg?style=flat-square
 
