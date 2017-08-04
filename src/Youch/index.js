@@ -42,13 +42,13 @@ class Youch {
   _readSource (frame) {
     return new Promise((resolve, reject) => {
       if(!frame.fileName) {
-        return resolve(frame)
+        return resolve()
       }
       fs.readFile(frame.fileName, 'utf-8', (error, contents) => {
         if (!error && contents) {
           frame.contents = contents  
         }
-        resolve(frame)
+        resolve()
       })
     })
   }
