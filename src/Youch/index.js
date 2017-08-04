@@ -20,7 +20,7 @@ const startingSlashRegex = /\\|\//
 const viewTemplate = fs.readFileSync(path.join(__dirname, VIEW_PATH), 'utf-8')
 
 class Youch {
-  constructor (error, request) {
+  constructor (error, request, readSource) {
     this.codeContext = 5
     this._filterHeaders = ['cookie', 'connection']
     this.error = error
@@ -30,31 +30,47 @@ class Youch {
       /babel-runtime/,
       /core-js\/library/
     ]
+    this.readSource = typeof readSource === 'function' ? readSource : this._readSource
   }
 
   /**
    * Returns the source code for a given file. It unable to
    * read file it resolves the promise with a null.
    *
+   * @param  {String} path
+   * @return {Promise}
+   */
+  _readSource (path) {
+    return new Promise((resolve, reject) => {
+      fs.readFile(path, 'utf-8', (error, contents) => {
+        if (error) {
+          return resolve(null)
+        }
+        return resolve(contents)
+      })
+    })
+  }
+
+  /**
+   * Returns source code for a given frame.
+   *
    * @param  {Object} frame
    * @return {Promise}
    */
   _getFrameSource (frame) {
-    return new Promise((resolve, reject) => {
-      fs.readFile(frame.getFileName(), 'utf-8', (error, contents) => {
-        if (error || !contents) {
-          return resolve(null)
-        }
+    return this.readSource(frame.getFileName()).then((contents) => {
+      if (!contents) {
+        return
+      }
 
-        const lines = contents.split(/\r?\n/)
-        const lineNumber = frame.getLineNumber()
+      const lines = contents.split(/\r?\n/)
+      const lineNumber = frame.getLineNumber()
 
-        resolve({
-          pre: lines.slice(Math.max(0, lineNumber - (this.codeContext + 1)), lineNumber - 1),
-          line: lines[lineNumber - 1],
-          post: lines.slice(lineNumber, lineNumber + this.codeContext)
-        })
-      })
+      return {
+        pre: lines.slice(Math.max(0, lineNumber - (this.codeContext + 1)), lineNumber - 1),
+        line: lines[lineNumber - 1],
+        post: lines.slice(lineNumber, lineNumber + this.codeContext)
+      }
     })
   }
 
