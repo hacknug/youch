@@ -620,6 +620,16 @@
       display: none;
     }
 
+    .open {
+      text-decoration: none;
+      color: gray;
+      margin-right: 10px;
+      border: 1px solid grey;
+      float: right;
+      padding: 1px 5px;
+      border-radius: 20px;
+    }
+
     @media only screen and (max-width: 970px) {
       .error-frames {
         flex-direction: column-reverse;
@@ -679,6 +689,7 @@
                   data-method="{{method}}"
                   data-line-column="{{line}}:{{column}}"
                   data-lang="{{ lang }}"
+                  data-open="{{ open }}"
                   >{{ context.pre }}
 {{ context.line }}
 {{ context.post }}
@@ -781,6 +792,11 @@ Prism.languages.javascript=Prism.languages.extend("clike",{keyword:/\b(as|async|
           var $method = $frameContext.attr('data-method')
           var $lineColumn = $frameContext.attr('data-line-column')
           var $lang = $frameContext.attr('data-lang')
+          var $open = $frameContext.attr('data-open')
+
+          if ($open) {
+            $file += '<a href="'+ $open + '" class="open">open in editor</a>'
+          }
 
           $('#code-drop').parent('pre').attr('data-line', $line);
           $('#code-drop').parent('pre').attr('data-start', $start);

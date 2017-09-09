@@ -179,8 +179,17 @@ class Youch {
       line: frame.getLineNumber(),
       column: frame.getColumnNumber(),
       context: this._getContext(frame),
-      lang: this._getLang(frame)
+      lang: this._getLang(frame),
+      open: this._openURL(frame)
     }
+  }
+
+  _openURL(frame) {
+    if (!frame.fullPath) {
+      return
+    }
+    const baseURL = `http://` + this.request.headers.host + '/_open'
+    return baseURL + '?file=' + encodeURI(frame.fullPath) + ':' + (frame.getLineNumber() || 0) + ':' + (frame.getColumnNumber() || 0)
   }
 
   /**
