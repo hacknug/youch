@@ -795,7 +795,7 @@ Prism.languages.javascript=Prism.languages.extend("clike",{keyword:/\b(as|async|
           var $open = $frameContext.attr('data-open')
 
           if ($open) {
-            $file += '<a href="'+ $open + '" class="open">open in editor</a>'
+            $file += '<a href="#" onClick="fetch(\''+ $open + '\')" class="open">open in editor</a>'
           }
 
           $('#code-drop').parent('pre').attr('data-line', $line);
