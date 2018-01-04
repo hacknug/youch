@@ -470,8 +470,9 @@
     }
 
     .frame-preview {
-      background: #fff;
       width: 50%;
+      max-width: 50%;
+      background: #fff;
       box-shadow: 0px 0px 9px #d3d3d3;
       height: 100%;
       box-sizing: border-box;
@@ -479,6 +480,8 @@
     }
 
     .frame-stack {
+      width: 50%;
+      max-width: 50%;
       margin-right: 40px;
       flex: 1;
       padding: 10px 0;
@@ -496,7 +499,7 @@
     }
 
     .unselectable {
-      -webkit-user-select: none; /* Chrome/Safari */        
+      -webkit-user-select: none; /* Chrome/Safari */
       -moz-user-select: none; /* Firefox */
       -ms-user-select: none; /* IE10+ */
 
@@ -599,6 +602,7 @@
     }
 
     .frame-row-code {
+      overflow: hidden;
       color: #999;
     }
 
