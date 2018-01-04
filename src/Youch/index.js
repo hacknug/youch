@@ -46,7 +46,7 @@ class Youch {
       }
       fs.readFile(frame.fileName, 'utf-8', (error, contents) => {
         if (!error && contents) {
-          frame.contents = contents  
+          frame.contents = contents
         }
         resolve()
       })
@@ -188,7 +188,7 @@ class Youch {
     if (!frame.fullPath) {
       return
     }
-    const baseURL = `http://` + this.request.headers.host + '/_open'
+    const baseURL = `http://` + this.request.headers.host + '/__open-in-editor'
     return baseURL + '?file=' + encodeURI(frame.fullPath) + ':' + (frame.getLineNumber() || 0) + ':' + (frame.getColumnNumber() || 0)
   }
 
