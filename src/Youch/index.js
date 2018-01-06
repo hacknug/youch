@@ -20,7 +20,7 @@ const startingSlashRegex = /\\|\//
 const viewTemplate = fs.readFileSync(path.join(__dirname, VIEW_PATH), 'utf-8')
 
 class Youch {
-  constructor (error, request, readSource) {
+  constructor (error, request, readSource, baseURL) {
     this.codeContext = 5
     this._filterHeaders = ['cookie', 'connection']
     this.error = error
@@ -31,6 +31,7 @@ class Youch {
       /core-js\/library/
     ]
     this.readSource = typeof readSource === 'function' ? readSource : this._readSource
+    this.baseURL = baseURL || '/'
   }
 
   /**
@@ -188,8 +189,10 @@ class Youch {
     if (!frame.fullPath) {
       return
     }
-    const baseURL = `http://` + this.request.headers.host + '/__open-in-editor'
-    return baseURL + '?file=' + encodeURI(frame.fullPath) + ':' + (frame.getLineNumber() || 0) + ':' + (frame.getColumnNumber() || 0)
+    return this.baseURL + '__open-in-editor' +
+      '?file=' + encodeURI(frame.fullPath || frame.fileName) +
+       ':' + (frame.getLineNumber() || 0) +
+       ':' + (frame.getColumnNumber() || 0)
   }
 
   /**
