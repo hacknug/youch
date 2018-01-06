@@ -193,7 +193,7 @@ class Youch {
     return this.baseURL + '__open-in-editor' +
       '?file=' + encodeURI(frame.fullPath || frame.fileName) +
        ':' + (frame.getLineNumber() || 0) +
-       this.addCol ? (':' + (frame.getColumnNumber() || 0)) : ''
+       (this.addCol ? (':' + (frame.getColumnNumber() || 0)) : '')
   }
 
   /**
