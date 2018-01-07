@@ -21,18 +21,19 @@ const viewTemplate = fs.readFileSync(path.join(__dirname, VIEW_PATH), 'utf-8')
 
 class Youch {
   constructor (error, request, readSource, baseURL, addCol) {
-    this.codeContext = 5
-    this._filterHeaders = ['cookie', 'connection']
     this.error = error
     this.request = request
+    this.readSource = typeof readSource === 'function' ? readSource : this._readSource
+    this.baseURL = baseURL || '/'
+    this.addCol = addCol === undefined ? true : Boolean(addCol)
+
+    this.codeContext = 5
+    this._filterHeaders = ['cookie', 'connection']
     this._filterFrames = [
       /regenerator-runtime/,
       /babel-runtime/,
       /core-js\/library/
     ]
-    this.readSource = typeof readSource === 'function' ? readSource : this._readSource
-    this.baseURL = baseURL || '/'
-    this.addCol = addCol
   }
 
   /**
